@@ -1,6 +1,24 @@
 {
-  "name": "node-auth-jwt",
+  "name": "auth-jwt",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Daniel-Vnzla/auth-node-jwt.git"
+  },
+  "author": " <rune.escape888@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/Daniel-Vnzla/auth-node-jwt/issues"
+  },
+  "homepage": "https://github.com/Daniel-Vnzla/auth-node-jwt#readme",
+  "devDependencies": {},
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "description": ""
 }
