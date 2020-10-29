@@ -1,10 +1,19 @@
 const router = require('express').Router();
 const User = require('../models/user.js')
 
-router.post('/singup', (req, res) => {
+router.post('/singup', async (req, res) => {
 	const { email, password, confirmPassword } = req.body;
 
-	user = [...user, { email, password }];
+	try{
+		const newUser = new User({ email, password });
+		const savedUser = await newUser.save();
+		return res.json(savedUser);
+	}
+	catch(err){
+		return console.log(err);
+	}
 
-	res.json({ message: 'user created' });
 })
+
+
+module.exports = router;
