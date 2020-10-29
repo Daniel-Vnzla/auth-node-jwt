@@ -9,9 +9,11 @@ const userSchema = new Schema({
 	password: {
 		type: String,
 		required: true,
+		bcrypt: true,
 	}
 }, { timestamp: true });
 
+userSchema.plugin(require('mongoose-bcrypt'));
 
 module.exports = model('User', userSchema);
 
