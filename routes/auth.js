@@ -1,35 +1,32 @@
 const router = require('express').Router();
-const User = require('../models/user.js')
-const { compare } = require('bcrypt');
+const User = require('../models/user.js');
 
-const comparePassword = async (loginPassword, registerPassword) => {
-	const passworMatch = await compare(loginPassword, registerPassword);
-	return { passworMatch }
-}
+const { validateSingUpUserData, validateSingInUserData } = require('../utils/validation.js');
+const { createUser, findUserAuth } = require('../utils/mongoose.js');
+
 
 router.post('/singin', async (req, res) => {
-	const { email, password } = req.body;
 	try {
-		const findUserAuth = await User.findOne({ email });
-		const { passworMatch } = await comparePassword(password, findUserAuth.password);
-
-		return res.json({user: findUserAuth});
+		await validateSingInUserData(req.body);
+		const user = await findUserAuth(req.body);
+		return res.json({ user });
 	}
 	catch(err){
 		console.log(err);
+		return res.status(500).json({ message: err.message })
 	}
 })
 
 router.post('/singup', async (req, res) => {
-	const { email, password, confirmPassword } = req.body;
+	const { username, email, password, confirmPassword } = req.body;
 
 	try{
-		const newUser = new User({ email, password });
-		const savedUser = await newUser.save();
-		return res.json(savedUser);
+		await validateSingUpUserData(req.body);
+		const newUser = await createUser(req.body);
+		return res.json(newUser);
 	}
 	catch(err){
-		return console.log(err);
+		return res.status(500).json({ message: err.message})
 	}
 
 })
