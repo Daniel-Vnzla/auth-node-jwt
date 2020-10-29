@@ -1,10 +1,23 @@
 const router = require('express').Router();
 const User = require('../models/user.js')
+const { compare } = require('bcrypt');
 
+const comparePassword = async (loginPassword, registerPassword) => {
+	const passworMatch = await compare(loginPassword, registerPassword);
+	return { passworMatch }
+}
 
 router.post('/singin', async (req, res) => {
-	const getUserAuthenticated = await User.findOne({ email: req.body.email });
-	return res.json({user: getUserAuthenticated});
+	const { email, password } = req.body;
+	try {
+		const findUserAuth = await User.findOne({ email });
+		const { passworMatch } = await comparePassword(password, findUserAuth.password);
+
+		return res.json({user: findUserAuth});
+	}
+	catch(err){
+		console.log(err);
+	}
 })
 
 router.post('/singup', async (req, res) => {
