@@ -17,6 +17,4 @@ app.use(require('./routes/auth.js'));
 
 app.get('/',(req, res) => res.sendFile('views/home.html', { root: __dirname }))
 
-
-
 app.listen(PORT, () => console.log('Server Ready'))

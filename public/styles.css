@@ -37,7 +37,12 @@ h1 {
 	margin-bottom: 30px;
 }
 
+.custom-input {
+	margin-bottom: 15px;
+}
+
 label {
+	display: block;
 	font-size: 1rem;
 	color: var(--secondary);
 }
@@ -47,11 +52,8 @@ input {
 	padding: 9px 10px;
 	width: 300px;
 	font-size: 1.1rem;
-
 	color: #929292;
-	margin-bottom: 10px;
 	border: 1px solid #ccc;
-
 }
 
 button {
@@ -62,4 +64,10 @@ button {
 	margin-top: 20px;
 	border: none;
 	border-radius: 30px;
+}
+
+
+.error {
+	font-size: .9rem;
+	color: red;
 }

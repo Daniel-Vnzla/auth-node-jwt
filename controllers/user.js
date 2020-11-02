@@ -22,7 +22,7 @@ const singin_post = async (req, res) => {
 	}
 	catch(err){
 		const errors = handleErrors(err);
-		return res.status(500).json(errors);
+		return res.status(500).json({ errors });
 	}
 }
 
@@ -35,7 +35,7 @@ const singup_post = async (req, res) => {
 	}
 	catch(err){
 		const errors = handleErrors(err);
-		return res.status(500).json(errors);
+		return res.status(500).json({ errors });
 	}
 
 }
