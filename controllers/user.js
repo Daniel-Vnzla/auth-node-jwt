@@ -16,13 +16,15 @@ const singup_get = (req, res) => {
 
 
 const singin_post = async (req, res) => {
+	const { email, password } = req.body;
 	try {
-		const user = await findUserAuth(req.body);
+		const { _id } = await User.login(email, password);
+		const token = createToken(_id);
+		res.cookie('token', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 })
 		return res.json({ user });
 	}
 	catch(err){
-		const errors = handleErrors(err);
-		return res.status(500).json({ errors });
+		return res.status(500).json({ errors: err });
 	}
 }
 
@@ -31,7 +33,7 @@ const singup_post = async (req, res) => {
 		const { _id } = await createUser(req.body);
 		const token = createToken(_id);
 		res.cookie('token', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 })
-		return res.json({ id: _id });
+		return res.json({ user: _id });
 	}
 	catch(err){
 		const errors = handleErrors(err);

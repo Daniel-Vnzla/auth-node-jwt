@@ -3,29 +3,66 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Sing Up</title>
+	<title>Sing In</title>
 	<link rel="stylesheet" href="/public/styles.css">
 </head>
 <body>
 		<form class="form" id="form">
 		<h1 class="title">Sing In!</h1>
-		<label for="email">Email</label>
-		<input id="email" name="email" type="email" name="email" required>
-		<label for="password">Password</label>
-		<input id="password" name="password"  type="password" name="password" required >
-		<div class="error"></div>
+		<div class="custom-input">
+			<label for="email">Email</label>
+			<input id="email" name="email" type="email" name="email" required>
+			<div class="email error"></div>
+		</div>
+
+		<div class="custom-input">
+			<label for="password">Password</label>
+			<input id="password" name="password"  type="password" name="password" required >
+			<div class="password error"></div>
+		</div>
+
 		<button type="submit" class="submit">Sing in</button>
 	</form>
 	
 </body>
 
 <script>
-	const form = document.querySelector('form')
+	const form = document.querySelector('form');
+	const emailError = document.querySelector('.email.error');
+	const passwordError = document.querySelector('.password.error');
+	const singInButton = document.querySelector('.submit');
 
-	form.addEventListener('submit', (e) => {
+	const handleErrors = (data) => {
+		if (data.errors) {
+			emailError.textContent = data.errors.email;
+			passwordError.textContent = data.errors.password;
+		}
+	}
+	form.addEventListener('submit', async (e) => {
 		e.preventDefault()
-		const [ email, password, confirmPassword ] = form;
-		console.log(email.value)
+		const [ email, password ] = form;
+
+		try{
+			singInButton.textContent = 'loading...';
+			const res = await fetch('/singin', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ 
+					email: email.value,
+					password: password.value,
+				}),
+			});
+			const data = await res.json();
+			handleErrors(data);
+
+			if(data.user) location.assign('/')
+		}
+		catch(err){
+			console.log(err);
+		}
+		finally {
+			singInButton.textContent = 'Sing in'
+		}
 	})
 
 </script>

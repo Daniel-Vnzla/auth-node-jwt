@@ -39,20 +39,13 @@
 	const passwordError = document.querySelector('.password.error');
 	const confirmPasswordError = document.querySelector('.confirmPassword.error');
 
-
-	const clearErrors = () => {
-
-	}
-
-
 	const handleErrors = (data) => {
 		if (data.errors) {
 			emailError.textContent = data.errors.email;
 			passwordError.textContent = data.errors.password;
 			if (confirmPassword.value !== password.value ) {
 				confirmPasswordError.textContent = 'Password not match'
-			} else confirmPasswordError.textContent = '';
-			
+			} else confirmPasswordError.textContent = '';	
 		}
 	}
 	form.addEventListener('submit', async (e) => {
@@ -70,6 +63,8 @@
 			});
 			const data = await res.json();
 			handleErrors(data);
+
+			if(data.user) location.assign('/')
 		}
 		catch(err){
 			console.log(err);

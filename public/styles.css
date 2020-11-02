@@ -68,6 +68,12 @@ button {
 
 
 .error {
-	font-size: .9rem;
-	color: red;
+	font-size: .8rem;
+	color: #fc5d7b;
+	font-weight: bold;
+}
+
+.submit {
+	outline: none;
+	cursor: pointer;
 }
