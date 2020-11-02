@@ -28,7 +28,7 @@
 		</div>
 	
 
-		<button type="submit" class="submit">Sing in</button>
+		<button type="submit" class="submit">Sing up</button>
 	</form>
 	
 </body>
@@ -38,6 +38,7 @@
 	const emailError = document.querySelector('.email.error');
 	const passwordError = document.querySelector('.password.error');
 	const confirmPasswordError = document.querySelector('.confirmPassword.error');
+	const singUpButton = document.querySelector('.submit');
 
 	const handleErrors = (data) => {
 		if (data.errors) {
@@ -53,6 +54,7 @@
 		const [ email, password, confirmPassword ] = form;
 
 		try{
+			singUpButton.textContent = 'Loading...';
 			const res = await fetch('/singup', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -68,6 +70,9 @@
 		}
 		catch(err){
 			console.log(err);
+		}
+		finally {
+			singUpButton.textContent = 'Sing up';
 		}
 	})
 

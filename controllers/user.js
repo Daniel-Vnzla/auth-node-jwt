@@ -21,7 +21,7 @@ const singin_post = async (req, res) => {
 		const { _id } = await User.login(email, password);
 		const token = createToken(_id);
 		res.cookie('token', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 })
-		return res.json({ user });
+		return res.json({ user: _id });
 	}
 	catch(err){
 		return res.status(500).json({ errors: err });
