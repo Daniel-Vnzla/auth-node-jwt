@@ -1,11 +1,14 @@
 const User = require('../models/user.js');
 
-const { validateSingUpUserData, validateSingInUserData } = require('../utils/validation.js');
 const { createUser, findUserAuth } = require('../utils/mongoose.js');
+
+
+const handlineErrors = (err) => {
+
+}
 
 const singIn = async (req, res) => {
 	try {
-		await validateSingInUserData(req.body);
 		const user = await findUserAuth(req.body);
 		return res.json({ user });
 	}
@@ -16,10 +19,9 @@ const singIn = async (req, res) => {
 }
 
 const singUp = async (req, res) => {
-	const { username, email, password, confirmPassword } = req.body;
+	const { email, password, confirmPassword } = req.body;
 
 	try{
-		await validateSingUpUserData(req.body);
 		const newUser = await createUser(req.body);
 		return res.json(newUser);
 	}
