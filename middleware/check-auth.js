@@ -1,10 +1,22 @@
-const jwt = require('jsonwebtoken');
+const { verify } = require('jsonwebtoken');
 
-module.exports = (req, res, next) => {
+const checkAuth = (req, res, next) => {
+	const token = req.cookies.token;
 	try{
-			jwt.verify(req.token, process.env.SECRET_TOKEN)
+			verify(token, process.env.SECRET_TOKEN, (err, token) => {
+				if (err) {
+					console.log(err.message)
+					location.assign('/');
+				}
+				console.log(token);
+				next();
+			})
 	  }
 		catch(err){
 			console.log(err);
 		}
 }
+
+module.exports = {
+	checkAuth
+} 
