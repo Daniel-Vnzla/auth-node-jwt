@@ -5,10 +5,13 @@ const userSchema = new Schema({
 	email: {
 		type: String,
 		required: true,
+		lowercase: true,
+		unique: true,
 	},
 	password: {
 		type: String,
 		required: true,
+		minLength: 7,
 		bcrypt: true,
 	}
 }, { timestamp: true });

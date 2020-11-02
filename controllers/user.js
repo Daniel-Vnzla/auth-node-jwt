@@ -3,7 +3,6 @@ const User = require('../models/user.js');
 const { validateSingUpUserData, validateSingInUserData } = require('../utils/validation.js');
 const { createUser, findUserAuth } = require('../utils/mongoose.js');
 
-
 const singIn = async (req, res) => {
 	try {
 		await validateSingInUserData(req.body);
