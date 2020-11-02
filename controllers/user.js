@@ -3,9 +3,14 @@ const User = require('../models/user.js');
 const { createUser, findUserAuth } = require('../utils/mongoose.js');
 
 
-const handlineErrors = (err) => {
-
-}
+// const handlineErrors = (err) => {
+// 	const errors = {
+// 		email: "",
+// 		password: ""
+// 	}
+// 
+// 	
+// }
 
 const singIn = async (req, res) => {
 	try {
@@ -26,7 +31,7 @@ const singUp = async (req, res) => {
 		return res.json(newUser);
 	}
 	catch(err){
-		return res.status(500).json({ message: err.message})
+		return res.status(500).json({ message: err})
 	}
 
 }
