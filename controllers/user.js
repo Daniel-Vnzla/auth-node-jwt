@@ -3,7 +3,7 @@ const User = require('../models/user.js');
 
 const { createUser, findUserAuth } = require('../utils/mongoose.js');
 const { handleErrors } = require('../utils/validation.js');
-
+const { createToken } = require('../utils/jwt.js');
 
 const singin_get = (req, res) => {
 	return res.sendFile(path.resolve('views/singin.html'))
@@ -26,13 +26,12 @@ const singin_post = async (req, res) => {
 	}
 }
 
-
 const singup_post = async (req, res) => {
-	const { email, password } = req.body;
-
 	try{
-		const newUser = await createUser(req.body);
-		return res.json(newUser);
+		const { _id } = await createUser(req.body);
+		const token = createToken(_id);
+		res.cookie('token', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 })
+		return res.json({ id: _id });
 	}
 	catch(err){
 		const errors = handleErrors(err);
