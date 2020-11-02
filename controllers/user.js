@@ -1,9 +1,21 @@
+const path = require('path');
 const User = require('../models/user.js');
 
 const { createUser, findUserAuth } = require('../utils/mongoose.js');
 const { handleErrors } = require('../utils/validation.js');
 
-singIn = async (req, res) => {
+
+const singin_get = (req, res) => {
+	return res.sendFile(path.resolve('views/singin.html'))
+
+}
+
+const singup_get = (req, res) => {
+	return res.sendFile(path.resolve('views/singup.html'))
+}
+
+
+const singin_post = async (req, res) => {
 	try {
 		const user = await findUserAuth(req.body);
 		return res.json({ user });
@@ -14,8 +26,9 @@ singIn = async (req, res) => {
 	}
 }
 
-const singUp = async (req, res) => {
-	const { email, password, confirmPassword } = req.body;
+
+const singup_post = async (req, res) => {
+	const { email, password } = req.body;
 
 	try{
 		const newUser = await createUser(req.body);
@@ -29,6 +42,8 @@ const singUp = async (req, res) => {
 }
 
 module.exports = {
-	singIn,
-	singUp,
+	singin_get,
+	singup_get,
+	singin_post,
+	singup_post,
 }
