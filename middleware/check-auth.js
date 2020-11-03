@@ -2,19 +2,14 @@ const { verify } = require('jsonwebtoken');
 
 const checkAuth = (req, res, next) => {
 	const token = req.cookies.token;
-	try{
-			verify(token, process.env.SECRET_TOKEN, (err, token) => {
-				if (err) {
-					console.log(err.message)
-					location.assign('/');
-				}
-				console.log(token);
+
+		if (token) {
+			verify(token, process.env.SECRET_TOKEN, (err, decodedToken) => {
+				if (err) res.redirect('/singin');
 				next();
 			})
-	  }
-		catch(err){
-			console.log(err);
-		}
+		}else res.redirect('/singin')
+	  
 }
 
 module.exports = {
