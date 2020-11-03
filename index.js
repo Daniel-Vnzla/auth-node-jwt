@@ -4,6 +4,7 @@ const dotenv = require('dotenv').config();
 const cookieParser = require('cookie-parser');
 
 const dataBase = require('./db.js');
+const { checkAuth } = require('./middleware/check-auth.js');
 
 const PORT = process.env.PORT || 5000;
 
@@ -16,6 +17,6 @@ app.use(cookieParser());
 app.use(require('./routes/auth.js'));
 
 app.get('/',(req, res) => res.sendFile('views/home.html', { root: __dirname }));
-app.get('/smoothies',(req, res) => res.sendFile('views/smoothies.html', { root: __dirname }));
+app.get('/smoothies', checkAuth, (req, res) => res.sendFile('views/smoothies.html', { root: __dirname }));
 
 app.listen(PORT, () => console.log('Server Ready'))
