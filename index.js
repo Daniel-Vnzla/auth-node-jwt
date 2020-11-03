@@ -15,6 +15,7 @@ app.use(cookieParser());
 
 app.use(require('./routes/auth.js'));
 
-app.get('/',(req, res) => res.sendFile('views/home.html', { root: __dirname }))
+app.get('/',(req, res) => res.sendFile('views/home.html', { root: __dirname }));
+app.get('/smoothies',(req, res) => res.sendFile('views/smoothies.html', { root: __dirname }));
 
 app.listen(PORT, () => console.log('Server Ready'))
