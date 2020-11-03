@@ -8,10 +8,16 @@ const checkAuth = (req, res, next) => {
 				if (err) res.redirect('/singin');
 				next();
 			})
-		}else res.redirect('/singin')
+		}else res.redirect('/singin');
 	  
 }
 
+const logout_get = (req, res) => {
+	res.cookie('token', "", { maxAge: 1 });
+	res.redirect('/');
+}
+
 module.exports = {
-	checkAuth
+	checkAuth,
+	logout_get
 } 
